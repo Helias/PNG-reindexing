@@ -11,6 +11,7 @@ To run this project you need **Python3** and the following packages:
 - pypng
 - numpy
 - scipy
+- image
 
 You can install the packages dependencies through:
 
