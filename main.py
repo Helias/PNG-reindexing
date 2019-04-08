@@ -1,7 +1,7 @@
 from functions import *
 import argparse
 
-parser = argparse.ArgumentParser(description='car model recognition')
+parser = argparse.ArgumentParser(description='PNG palette reordering tool')
 parser.add_argument("-i", "--input",      action="store",       dest="inp",   help="Take a sample image and reindex it", type=str)
 parser.add_argument("-r", "--run",        action="store_true",                help="Generate a new image img1.png and reindex it making img2.png")
 args = parser.parse_args()
