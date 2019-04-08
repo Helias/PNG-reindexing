@@ -2,15 +2,11 @@ from functions import *
 import argparse
 
 parser = argparse.ArgumentParser(description='car model recognition')
-
 parser.add_argument("-i", "--input",      action="store",       dest="inp",   help="Take a sample image and reindex it", type=str)
-parser.add_argument("-r", "--run",        action="store_true",                help="Generate a new image and ")
-
+parser.add_argument("-r", "--run",        action="store_true",                help="Generate a new image img1.png and reindex it making img2.png")
 args = parser.parse_args()
 
 def reindexing(img_name=None):
-
-    sys.argv = "" # remove parameters for ant colony classes
 
     # if img_name is None generate new image
     if img_name is None:
@@ -23,7 +19,17 @@ def reindexing(img_name=None):
 
     if "palette" not in metadata:
         print("This image has no palette")
-        exit(0)
+
+        # pixs, _palette = generate_palette_indexed_pixels(img_name)
+        # try:
+        #     write_image("img_1.png", pixs, _palette)
+
+        #     source = png.Reader("img_1.png")
+        #     width, height, pixels, metadata = source.read()
+        # except Exception as e:
+        #     print ("Error: "+str(e))
+        #     exit(0)
+
 
     # converting pixels hex bytearray into integer
     pixels_idx = []
@@ -46,4 +52,7 @@ if args.run:
     reindexing()
 
 if args.inp:
-    reindexing(args.inp)
+    if "png" not in args.inp:
+        print ("The file is not a PNG image")
+    else:
+        reindexing(args.inp)

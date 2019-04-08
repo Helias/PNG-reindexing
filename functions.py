@@ -6,6 +6,7 @@ import numpy as np
 import ntpath
 from random import randint
 from scipy.spatial.distance import euclidean
+from PIL import Image
 
 # Ant Colony
 from ant_colony_algorithm.antcolony import AntColony
@@ -93,9 +94,6 @@ def calculate_weights(m, t, matrix):
 def apply_ant_colony(palette, cost_mat):
     num_nodes = len(palette)
 
-    if len(sys.argv) > 1 and sys.argv[1]:
-        num_nodes = int(sys.argv[1])
-
     if num_nodes <= 10:
         num_ants = 20
         num_iterations = 12
@@ -155,3 +153,25 @@ def convert_palette(best_path_vec, palette, pixels_idx):
         new_pixels_idx.append(tuple(t))
 
     return new_palette, new_pixels_idx
+
+def generate_palette_indexed_pixels(img_name):
+    im = Image.open(img_name)
+    [width, height] = im.size
+
+    p_colors = im.getdata() # this is not only for PNG
+    p_colors = list(p_colors)
+
+    palette = list(set(p_colors)) # remove duplicates from p_colors
+    k_v = dict() # make new dict key-value for pixels indexing
+
+    for i in range(len(palette)):
+        k_v[palette[i]] = i
+
+    pixels_idx = []
+    for i in range(height):
+        pixels_idx.append([])
+        for j in range(width):
+            idx = (i*width)+j
+            pixels_idx[i].append( k_v[p_colors[idx]] )
+
+    return pixels_idx, palette
