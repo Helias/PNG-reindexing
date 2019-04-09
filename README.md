@@ -40,8 +40,8 @@ The `-i` (input) parameter get a png image as input and generate the same image 
 
 ---
 
-The `-l` (log) parameter is optional, if inserted it generate a file `palette_stats.txt` that show the pixels indexed, palette and the best order of palette (about old unordered palette and new image with ordered palette).
-Is recommended to use this parameter only with small image.
+The `-l` (log) parameter is optional, if used it generates a file `palette_stats.txt` that show the pixels indexed, palette and the best order of palette (about old unordered palette and new image with ordered palette).
+Is recommended to use this parameter only with small images.
 
 ## Credits
 
