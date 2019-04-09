@@ -20,15 +20,16 @@ def reindexing(img_name=None):
     if "palette" not in metadata:
         print("This image has no palette")
 
-        # pixs, _palette = generate_palette_indexed_pixels(img_name)
-        # try:
-        #     write_image("img_1.png", pixs, _palette)
+        pixs, _palette = generate_palette_indexed_pixels(img_name)
 
-        #     source = png.Reader("img_1.png")
-        #     width, height, pixels, metadata = source.read()
-        # except Exception as e:
-        #     print ("Error: "+str(e))
-        #     exit(0)
+        try:
+            write_image("img_1.png", pixs, _palette)
+
+            source = png.Reader("img_1.png")
+            width, height, pixels, metadata = source.read()
+        except Exception as e:
+            print ("Error: "+str(e))
+            exit(0)
 
 
     # converting pixels hex bytearray into integer
@@ -38,7 +39,7 @@ def reindexing(img_name=None):
 
     M = matrix_co_occurences(pixels_idx, metadata["palette"])
     T = space_color_distance(metadata["palette"])
-    W = calculate_weights(M, T, pixels_idx)
+    W = calculate_weights(M, T, pixels_idx, len(metadata["palette"]))
 
     best_path_vec = apply_ant_colony(metadata["palette"], W)
 
@@ -47,6 +48,9 @@ def reindexing(img_name=None):
     write_image("img2.png", new_pixels_idx, new_palette)
 
     print (path_leaf(img_name)+" reindexed, check img2.png!")
+
+    write_palette_data(metadata["palette"], new_palette, pixels_idx, new_pixels_idx, best_path_vec)
+    print ("Written old palette and new palette in palette_stats.txt")
 
 if args.run:
     reindexing()

@@ -76,13 +76,13 @@ def space_color_distance(palette):
     return distances
 
 # calculate weights (distance matrix) (W)
-def calculate_weights(m, t, matrix):
+def calculate_weights(m, t, matrix, len_palette):
 
     #init matrix with 1 values to avoid divide by 0
-    matrix_distances = [[1 for j in range(len(matrix[0]))] for i in range(len(matrix))]
+    matrix_distances = [[1 for j in range(len_palette)] for i in range(len_palette)]
 
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
+    for i in range(len_palette):
+        for j in range(len_palette):
             key = str(i)+"_"+str(j)
 
             if i != j and m[key] != 0 and key in t:
@@ -175,3 +175,38 @@ def generate_palette_indexed_pixels(img_name):
             pixels_idx[i].append( k_v[p_colors[idx]] )
 
     return pixels_idx, palette
+
+
+def write_palette_data(old_palette, new_palette, old_pixels, new_pixels, best_idx):
+
+    text = "old palette:\n["
+    for i in range(len(old_palette)):
+        text += str(old_palette[i])+" "
+
+    text +="]\n\n new palette:\n["
+    for i in range(len(new_palette)):
+        text += str(new_palette[i])+" "
+    text+="]\n"
+
+    text +="]\n\n old pixels indexed:\n[\n"
+    for i in range(len(old_pixels)):
+        for j in range(len(old_pixels[0])):
+            text += str(old_pixels[i])+" "
+        text+="\n"
+    text+="]\n"
+
+    text +="\n new pixels indexed:\n[\n"
+    for i in range(len(new_pixels)):
+        for j in range(len(new_pixels[0])):
+            text += str(new_pixels[i])+" "
+        text+="\n"
+    text+="]\n"
+
+    text+="\n new index order:\n["
+    for i in range(len(best_idx)):
+        text+= str(best_idx)+" "
+    text+="]\n"
+
+    f = open("palette_stats.txt", "w+")
+    f.write(text)
+    f.close()
