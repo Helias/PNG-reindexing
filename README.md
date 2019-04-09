@@ -29,14 +29,19 @@ This project provides the following commands:
 $ python3 main.py -r
 ```
 
-The **-r** (run) parameter generate a new image img1.png of 8x8 pixels with random palette and colors and img2.png with a ordered palette.
+The `-r` (run) parameter generate a new image img1.png of 8x8 pixels with random palette and colors and img2.png with a ordered palette.
 
 
 ```
 $ python3 main.py -i path/file_name.png
 ```
 
-The **-i** (input) parameter get a png image as input and generate the same image as img2.png with a new palette ordered and with the reindexed colors.
+The `-i` (input) parameter get a png image as input and generate the same image as img2.png with a new palette ordered and with the reindexed colors.
+
+---
+
+The `-l` (log) parameter is optional, if inserted it generate a file `palette_stats.txt` that show the pixels indexed, palette and the best order of palette (about old unordered palette and new image with ordered palette).
+Is recommended to use this parameter only with small image.
 
 ## Credits
 
