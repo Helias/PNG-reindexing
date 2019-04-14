@@ -5,6 +5,8 @@ This project consist into implement this concept: *[A Fast Palette Reordering Te
 
 This project use AntColony algorithm based on [this](https://github.com/trevlovett/Python-Ant-Colony-TSP-Solver) implementation.
 
+You can try this project with the Telegram Bot [PNG-reindexer-bot](https://github.com/Helias/PNG-reindexer-bot), just open [@png_reindexer_bot](https://t.me/png_reindexer_bot) with Telegram and send a picture.
+
 ## Requirements
 
 To run this project you need **Python3** and the following packages:
