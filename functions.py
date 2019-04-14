@@ -154,7 +154,7 @@ def convert_palette(best_path_vec, palette, pixels_idx):
 
     return new_palette, new_pixels_idx
 
-def generate_palette_indexed_pixels(img_name):
+def generate_palette_indexed_pixels(img_name, force=None):
     im = Image.open(img_name)
     [width, height] = im.size
 
@@ -164,21 +164,25 @@ def generate_palette_indexed_pixels(img_name):
     palette = list(set(p_colors)) # remove duplicates from p_colors
 
     if len(palette) > 256:
-        im = im.convert("RGB")
-        im = im.convert('P', palette=Image.ADAPTIVE) # colors=256 as default
+        if not force:
+            print("This image has more than 256 colors, use the parameter -f to force the PNG format for palette")
+            exit(0)
+        else:
+            im = im.convert("RGB")
+            im = im.convert('P', palette=Image.ADAPTIVE) # colors=256 as default
 
-        p_colors = list(im.getdata()) # this is not only for PNG
-        palette = list(im.palette.palette) # remove duplicates from palette
+            p_colors = list(im.getdata()) # this is not only for PNG
+            palette = list(im.palette.palette) # remove duplicates from palette
 
-        N = 3
-        palette = [tuple(palette[n:n+N]) for n in range(0, len(palette), N)]
+            N = 3
+            palette = [tuple(palette[n:n+N]) for n in range(0, len(palette), N)]
 
-        pixels_idx = []
-        for i in range(height):
-            pixels_idx.append([])
-            for j in range(width):
-                idx = (i*width)+j
-                pixels_idx[i].append( p_colors[idx] )
+            pixels_idx = []
+            for i in range(height):
+                pixels_idx.append([])
+                for j in range(width):
+                    idx = (i*width)+j
+                    pixels_idx[i].append( p_colors[idx] )
     else:
         k_v = dict() # make new dict key-value for pixels indexing
 
@@ -203,7 +207,7 @@ def write_palette_data(old_palette, new_palette, old_pixels, new_pixels, best_id
     text +="]\n\n new palette:\n["
     for i in range(len(new_palette)):
         text += str(new_palette[i])+" "
-    text+="]\n"
+    text+="\n"
 
     text +="]\n\n old pixels indexed:\n[\n"
     for i in range(len(old_pixels)):
@@ -221,7 +225,7 @@ def write_palette_data(old_palette, new_palette, old_pixels, new_pixels, best_id
 
     text+="\n new index order:\n["
     for i in range(len(best_idx)):
-        text+= str(best_idx)+" "
+        text+= str(best_idx[i])+" "
     text+="]\n"
 
     f = open("palette_stats.txt", "w+")

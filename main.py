@@ -5,6 +5,7 @@ parser = argparse.ArgumentParser(description='PNG palette reordering tool')
 parser.add_argument("-i", "--input",      action="store",       dest="inp",   help="Take a sample image and reindex it", type=str)
 parser.add_argument("-r", "--run",        action="store_true",                help="Generate a new image img1.png and reindex it making img2.png")
 parser.add_argument("-l", "--log",        action="store_true",                help="Generate file palette_stats.txt with all pixels indexed and palette (old and new)")
+parser.add_argument("-f", "--force",      action="store_true",                help="Force to reduce the colors of the image to 256 and generating a new image PNG and the same with a ordered palette")
 args = parser.parse_args()
 
 def reindexing(img_name=None):
@@ -18,7 +19,7 @@ def reindexing(img_name=None):
     if args.inp and "png" not in args.inp:
         print ("The file is not a PNG image, converting into PNG...")
 
-        pixs, _palette = generate_palette_indexed_pixels(img_name)
+        pixs, _palette = generate_palette_indexed_pixels(img_name, args.force)
         write_image("img_1.png", pixs, _palette)
         source = png.Reader("img_1.png")
         width, height, pixels, metadata = source.read()
@@ -29,7 +30,7 @@ def reindexing(img_name=None):
         if "palette" not in metadata:
             print("This image has no palette, generating palette...")
 
-            pixs, _palette = generate_palette_indexed_pixels(img_name)
+            pixs, _palette = generate_palette_indexed_pixels(img_name, args.force)
             write_image("img_1.png", pixs, _palette)
             source = png.Reader("img_1.png")
             width, height, pixels, metadata = source.read()
