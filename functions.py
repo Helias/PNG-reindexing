@@ -47,7 +47,7 @@ def generate_new_image(img_name):
         for j in range(len(colors)):
             row.append(randint(0, len(colors)-1))
         pixels_idx.append(tuple(row))
-    
+
     write_image(img_name, pixels_idx, palette)
 
 # calculate co-occurences matrix (M)
@@ -78,6 +78,8 @@ def space_color_distance(palette):
 # calculate weights (distance matrix) (W)
 def calculate_weights(m, t, matrix, len_palette):
 
+    print(t)
+
     #init matrix with 1 values to avoid divide by 0
     matrix_distances = [[1 for j in range(len_palette)] for i in range(len_palette)]
 
@@ -87,8 +89,19 @@ def calculate_weights(m, t, matrix, len_palette):
 
             if i == j:
                 matrix_distances[i][j] = 0
-            elif i != j and m[key] != 0 and key in t:
+            elif m[key] != 0 and key in t:
                 matrix_distances[i][j] += round(t[key] + 1/m[key],2)
+            elif m[key] != 0 and not key in t:
+                matrix_distances[i][j] += round(0 + 1/m[key],2)
+            elif m[key] == 0 and key in t:
+                matrix_distances[i][j] += round(t[key], 2)
+
+    # for i in range(len(matrix_distances)):
+    #     text = ""
+    #     for j in range(len(matrix_distances[j])):
+    #         text += str(matrix_distances[i][j])+"\t"
+    #     print(text)
+    # exit(0)
 
     return matrix_distances
 
