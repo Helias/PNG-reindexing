@@ -85,7 +85,9 @@ def calculate_weights(m, t, matrix, len_palette):
         for j in range(len_palette):
             key = str(i)+"_"+str(j)
 
-            if i != j and m[key] != 0 and key in t:
+            if i == j:
+                matrix_distances[i][j] = 0
+            elif i != j and m[key] != 0 and key in t:
                 matrix_distances[i][j] += round(t[key] + 1/m[key],2)
 
     return matrix_distances
