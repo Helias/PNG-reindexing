@@ -227,14 +227,14 @@ def write_palette_data(old_palette, new_palette, old_pixels, new_pixels, best_id
     text +="]\n\n old pixels indexed:\n[\n"
     for i in range(len(old_pixels)):
         for j in range(len(old_pixels[0])):
-            text += str(old_pixels[i])+" "
+            text += str(old_pixels[i][j])+" "
         text+="\n"
     text+="]\n"
 
     text +="\n new pixels indexed:\n[\n"
     for i in range(len(new_pixels)):
         for j in range(len(new_pixels[0])):
-            text += str(new_pixels[i])+" "
+            text += str(new_pixels[i][j])+" "
         text+="\n"
     text+="]\n"
 
