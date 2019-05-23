@@ -215,30 +215,30 @@ def generate_palette_indexed_pixels(img_name, force=None):
 
 def write_palette_data(old_palette, new_palette, old_pixels, new_pixels, best_idx):
 
-    text = "old palette:\n["
+    text = "old palette:\n[ "
     for i in range(len(old_palette)):
         text += str(old_palette[i])+" "
 
-    text +="]\n\n new palette:\n["
+    text +="]\n\n new palette:\n[ "
     for i in range(len(new_palette)):
         text += str(new_palette[i])+" "
-    text+="\n"
+    text+="]\n"
 
-    text +="]\n\n old pixels indexed:\n[\n"
+    text +="\n\n old pixels indexed:\n[\n"
     for i in range(len(old_pixels)):
         for j in range(len(old_pixels[0])):
-            text += str(old_pixels[i][j])+" "
+            text += " "+str(old_pixels[i][j])
         text+="\n"
     text+="]\n"
 
     text +="\n new pixels indexed:\n[\n"
     for i in range(len(new_pixels)):
         for j in range(len(new_pixels[0])):
-            text += str(new_pixels[i][j])+" "
+            text += " "+str(new_pixels[i][j])
         text+="\n"
     text+="]\n"
 
-    text+="\n new index order:\n["
+    text+="\n new index order:\n[ "
     for i in range(len(best_idx)):
         text+= str(best_idx[i])+" "
     text+="]\n"
